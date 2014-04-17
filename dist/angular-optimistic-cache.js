@@ -1,4 +1,4 @@
-angular.module('rt.optimisticcache').factory('optimisticCache', function () {
+angular.module('rt.optimisticcache', []).factory('optimisticCache', function () {
   /*
      * Magical call caching.
      *
