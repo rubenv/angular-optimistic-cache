@@ -1,6 +1,6 @@
 {
   "name": "angular-optimistic-cache",
-  "version": "0.0.3",
+  "version": "0.0.1",
   "main": "dist/angular-optimistic-cache.js",
   "ignore": [
     "**/.*",
