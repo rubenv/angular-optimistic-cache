@@ -1,0 +1,19 @@
+{
+  "name": "angular-optimistic-cache",
+  "version": "0.0.3",
+  "main": "dist/angular-optimistic-cache.js",
+  "ignore": [
+    "**/.*",
+    "src",
+    "node_modules",
+    "bower_components",
+    "test",
+    "Gruntfile.coffee"
+  ],
+  "dependencies": {
+    "angular": "*"
+  },
+  "devDependencies": {
+    "angular-mocks": "*"
+  }
+}
