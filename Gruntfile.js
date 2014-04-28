@@ -5,6 +5,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-jscs-checker');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-ngmin');
 
@@ -20,7 +21,7 @@ module.exports = function (grunt) {
                     jshintrc: '.jshintrc'
                 },
                 files: {
-                    src: ['src/**.js']
+                    src: ['src/**/*.js']
                 }
             },
             test: {
@@ -28,9 +29,20 @@ module.exports = function (grunt) {
                     jshintrc: '.jshintrc-test'
                 },
                 files: {
-                    src: ['*.js', 'test/*{,/*}.js']
+                    src: ['*.js', 'test/**/*.js']
                 }
             }
+        },
+
+        jscs: {
+            src: {
+                options: {
+                    config: '.jscs.json'
+                },
+                files: {
+                    src: ['*.js', '{src,test}/**/*.js']
+                }
+            },
         },
 
         concat: {
@@ -91,7 +103,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('default', ['test']);
-    grunt.registerTask('build', ['clean', 'jshint', 'concat', 'ngmin', 'uglify']);
+    grunt.registerTask('build', ['clean', 'jshint', 'jscs', 'concat', 'ngmin', 'uglify']);
     grunt.registerTask('test', ['build', 'karma:unit', 'watch:all']);
     grunt.registerTask('ci', ['build', 'karma:unitci_firefox']);
 };

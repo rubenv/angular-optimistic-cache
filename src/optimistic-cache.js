@@ -26,7 +26,7 @@ angular.module('rt.optimisticcache', []).factory('optimisticCache', function () 
             // Cache dependents of getAll call (partial results)
             for (var i = 0; i < result.length; i++) {
                 var obj = result[i];
-                cacheResult(cacheResult(url + "/" + obj[options.idField], obj));
+                cacheResult(cacheResult(url + '/' + obj[options.idField], obj));
             }
         }
     }
