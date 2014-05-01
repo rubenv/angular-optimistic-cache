@@ -1,0 +1,100 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="940" measuredH="301" mockupW="879" mockupH="269">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="61" y="32" w="279" h="269" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1"/>
+    <control controlID="1" controlTypeID="__group__" x="76" y="156" w="76" h="74" measuredW="76" measuredH="74" zOrder="1" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Link" x="10" y="1" w="-1" h="-1" measuredW="56" measuredH="18" zOrder="0" locked="false" isInGroup="1">
+          <controlProperties>
+            <text>John%20Doe</text>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Link" x="10" y="19" w="-1" h="-1" measuredW="56" measuredH="18" zOrder="1" locked="false" isInGroup="1">
+          <controlProperties>
+            <text>Jane%20Doe</text>
+          </controlProperties>
+        </control>
+        <control controlID="2" controlTypeID="com.balsamiq.mockups::Link" x="10" y="37" w="-1" h="-1" measuredW="57" measuredH="18" zOrder="2" locked="false" isInGroup="1">
+          <controlProperties>
+            <text>Joe%20Black</text>
+          </controlProperties>
+        </control>
+        <control controlID="3" controlTypeID="com.balsamiq.mockups::Link" x="10" y="55" w="-1" h="-1" measuredW="66" measuredH="18" zOrder="3" locked="false" isInGroup="1">
+          <controlProperties>
+            <text>Ron%20Blacks</text>
+          </controlProperties>
+        </control>
+        <control controlID="4" controlTypeID="com.balsamiq.mockups::Label" x="0" y="0" w="-1" h="-1" measuredW="10" measuredH="20" zOrder="4" locked="false" isInGroup="1">
+          <controlProperties>
+            <text>%u2022</text>
+          </controlProperties>
+        </control>
+        <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="0" y="18" w="-1" h="-1" measuredW="10" measuredH="20" zOrder="5" locked="false" isInGroup="1">
+          <controlProperties>
+            <text>%u2022</text>
+          </controlProperties>
+        </control>
+        <control controlID="6" controlTypeID="com.balsamiq.mockups::Label" x="0" y="36" w="-1" h="-1" measuredW="10" measuredH="20" zOrder="6" locked="false" isInGroup="1">
+          <controlProperties>
+            <text>%u2022</text>
+          </controlProperties>
+        </control>
+        <control controlID="7" controlTypeID="com.balsamiq.mockups::Label" x="0" y="54" w="-1" h="-1" measuredW="10" measuredH="20" zOrder="7" locked="false" isInGroup="1">
+          <controlProperties>
+            <text>%u2022</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Label" x="76" y="121" w="-1" h="-1" measuredW="66" measuredH="27" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>true</bold>
+        <size>20</size>
+        <text>People</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="364" y="32" w="279" h="269" measuredW="450" measuredH="400" zOrder="3" locked="false" isInGroup="-1"/>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::Paragraph" x="406" y="156" w="126" h="80" measuredW="200" measuredH="80" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <align>center</align>
+        <bold>true</bold>
+        <color>13576743</color>
+        <text>%28Uncomfortable%0Asilence%29</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="661" y="32" w="279" h="269" measuredW="450" measuredH="400" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>square</borderStyle>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Label" x="754" y="121" w="-1" h="-1" measuredW="92" measuredH="27" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>true</bold>
+        <size>20</size>
+        <text>John%20Doe</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Image" x="676" y="121" w="65" h="71" measuredW="139" measuredH="151" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <crop>333%2C280%2C362%2C301</crop>
+        <src>http%3A//farm4.staticflickr.com/3123/3195835458_668804707d.jpg</src>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Image" x="748" y="154" w="177" h="34" measuredW="77" measuredH="79" zOrder="8" locked="false" isInGroup="-1"/>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Image" x="748" y="194" w="177" h="34" measuredW="77" measuredH="79" zOrder="9" locked="false" isInGroup="-1"/>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Image" x="748" y="234" w="177" h="34" measuredW="77" measuredH="79" zOrder="10" locked="false" isInGroup="-1"/>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::Arrow" x="188" y="161" w="218" h="10" measuredW="150" measuredH="100" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>13576743</color>
+        <curvature>0</curvature>
+        <leftArrow>false</leftArrow>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::Arrow" x="529" y="171" w="198" h="45" measuredW="150" measuredH="100" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>13576743</color>
+        <curvature>-1</curvature>
+        <leftArrow>false</leftArrow>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
