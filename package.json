@@ -1,6 +1,6 @@
 {
   "name": "angular-optimistic-cache",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Optimistically use cached data before a request finishes.",
   "main": "dist/angular-optimistic-cache.js",
   "directories": {
