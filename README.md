@@ -132,7 +132,38 @@ angular.module('myApp').controller('PeopleCtrl', function ($scope, $http, optimi
 
 And magic will happen!
 
-TODO: Finish docs
+## API
+
+The module exposes one service: `optimisticCache(promise, namespace, options)`.
+
+Parameters:
+
+* A promise (any promise, doesn't have to be related to `$http`). This promise will be wrapped and augmented with the `toScope` method.
+* A namespace that represents where the loaded data is situated. This doesn't have to be an existing URL. It's used to match multiple calls together.
+* Optional extra options (see below).
+
+## Master / detail
+
+The namespace is how calls are matched: when a promise is created, a cache is checked to see if a previous promise with the same namespace parameter has existed. If that's the case, the previous result is temporarily put on the scope (this avoids the uncomfortable silence).
+
+Namespaces are structured and the module assumes that you use standard REST structures. This means that the element in `/api/people` with an `id` of `123` should map to `/api/people/123`. When a promise is resolved with an array, the cache will also be filled for children.
+
+An example (namespace: `/api/people`):
+
+```
+[
+    { id: 123, name: "Test" }
+]
+```
+
+This also fills the cache of namespace `/api/people/123` with `{ id: 123, name: "Test" }`.
+
+## Options
+
+The options parameter is an optional object that can have the following keys (all are optional):
+
+* `idField` (default: `id`): Which field to use for populating child caches.
+* `populateChildren` (default: `true`): Whether or not to populate child caches if the promise results to an array.
 
 ## License 
 
