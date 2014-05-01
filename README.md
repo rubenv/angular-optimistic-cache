@@ -39,7 +39,7 @@ Isn't it a bit strange that you know the name of the person on which the user cl
 
 The `angular-optimistic-cache` module is a very lightweight module to add some of that to your application. It's probably the least intrustive way to avoid uncomfortable silences.
 
-## Usage
+## Installation
 Add angular-optimistic-cache to your project:
 
 ```
@@ -58,11 +58,47 @@ Reference it as a dependency for your app module:
 angular.module('myApp', ['rt.optimisticcache']);
 ```
 
-Use it:
+## How it works
+
+This module works by wrapping the promises that you wait for. It adds a `toScope` method where you can indicate where the result should be placed on the scope.
+
+It then does the following:
+
+* The promise is loaded as usual, in the background.
+* If it has a previously-cached value for the promise, it'll put that one on the scope.
+* Once the promise is loaded, it replaces the scope value with the up-to-date data.
+
+The end result: users see data instantly, which is updated once it's loaded.
+
+## Usage
+
+Let's take another look at the controller in the example above:
 
 ```js
-// TODO
+angular.module('myApp').controller('PeopleCtrl', function ($scope, $http) {
+    $http.get('/api/people').then(function (result) {
+        $scope.people = result.data;
+    });
+});
 ```
+
+First split out the loading function:
+
+```js
+angular.module('myApp').controller('PeopleCtrl', function ($scope, $http) {
+    var fetchPeople = function () {
+        return $http.get('/api/people').then(function (result) {
+            return result.data;
+        });
+    }
+    
+    fetchPeople().then(function (people) {
+        $scope.people = people;
+    });
+});
+```
+
+TODO: Finish docs
 
 ## License 
 
