@@ -86,7 +86,7 @@ First split out the loading function:
 
 ```js
 angular.module('myApp').controller('PeopleCtrl', function ($scope, $http) {
-    var fetchPeople = function () {
+    function fetchPeople() {
         return $http.get('/api/people').then(function (result) {
             return result.data;
         });
@@ -97,6 +97,40 @@ angular.module('myApp').controller('PeopleCtrl', function ($scope, $http) {
     });
 });
 ```
+
+Then wrap the promise:
+
+```js
+angular.module('myApp').controller('PeopleCtrl', function ($scope, $http, optimisticCache) {
+    function fetchPeople() {
+        var promise = $http.get('/api/people').then(function (result) {
+            return result.data;
+        });
+        return optimisticCache(promise, '/api/people');
+    }
+    
+    fetchPeople().then(function (people) {
+        $scope.people = people;
+    });
+});
+```
+
+Now change the usage:
+
+```js
+angular.module('myApp').controller('PeopleCtrl', function ($scope, $http, optimisticCache) {
+    function fetchPeople() {
+        var promise = $http.get('/api/people').then(function (result) {
+            return result.data;
+        });
+        return optimisticCache(promise, '/api/people');
+    }
+    
+    fetchPeople().toScope($scope, 'people');
+});
+```
+
+And magic will happen!
 
 TODO: Finish docs
 
