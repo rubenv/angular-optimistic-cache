@@ -42,7 +42,7 @@ module.exports = function (grunt) {
                 files: {
                     src: ['*.js', '{src,test}/**/*.js']
                 }
-            },
+            }
         },
 
         concat: {
