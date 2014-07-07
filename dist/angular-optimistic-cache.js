@@ -55,7 +55,7 @@ angular.module('rt.optimisticcache', []).factory('optimisticCache', function () 
   }
   // Augments the promise with a toScope method, which assigns the result of
   // the call to the scope.
-  return function optimisticCache(promise, url, options) {
+  function optimisticCache(promise, url, options) {
     if (!options) {
       options = {};
     }
@@ -84,5 +84,10 @@ angular.module('rt.optimisticcache', []).factory('optimisticCache', function () 
       });
     };
     return promise;
+  }
+  // Clears all cached results.
+  optimisticCache.clear = function () {
+    cache = {};
   };
+  return optimisticCache;
 });

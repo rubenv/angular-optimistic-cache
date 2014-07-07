@@ -155,6 +155,34 @@ describe('Optimistic Cache', function () {
         assert.equal(scope.person, result);
     });
 
+    it('Can expire caches', function () {
+        // Fill cache
+        var deferred = $q.defer();
+        var promise = optimisticCache(deferred.promise, 'test');
+        deferred.resolve({
+            id: 123
+        });
+        $rootScope.$digest();
+
+        // Clear cache
+        optimisticCache.clear();
+
+        // Request it again somewhere else
+        deferred = $q.defer();
+        promise = optimisticCache(deferred.promise, 'test');
+
+        // Should not be on the scope, it's not cached anymore
+        var scope = {};
+        promise.toScope(scope, 'test');
+        assert.equal(scope.test, undefined);
+
+        // Scope gets updated when results come in
+        deferred.resolve({
+            id: 124
+        });
+        $rootScope.$digest();
+        assert.equal(scope.test.id, 124);
+    });
+
     it('Can use different ID field');
-    it('Can expire caches');
 });
