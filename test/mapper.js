@@ -1,7 +1,21 @@
-describe('Optimistic Cache', function () {
+describe('Optimistic Cache: Mapper', function () {
     var $q = null;
     var $rootScope = null;
     var optimisticCache = null;
+
+    function Person(id) {
+        this.ssn = id;
+    }
+
+    var mapperOptions = {
+        mapper: function (obj) {
+            var person = new Person(obj.id);
+            if (obj.name) {
+                person.name = obj.name;
+            }
+            return person;
+        }
+    };
 
     beforeEach(module('rt.optimisticcache'));
 
@@ -11,16 +25,27 @@ describe('Optimistic Cache', function () {
         optimisticCache = $injector.get('optimisticCache');
     }));
 
-    it('Adds a toScope method', function () {
+    it('Can supply a mapper (single object)', function () {
         var deferred = $q.defer();
-        var promise = optimisticCache(deferred.promise, 'test');
-        assert.isFunction(promise.toScope);
+        var scope = {};
+
+        optimisticCache(deferred.promise, 'test', {
+            mapper: function (obj) {
+                return new Person(obj.id);
+            }
+        }).toScope(scope, 'test');
+        deferred.resolve({
+            id: 123
+        });
+        $rootScope.$digest();
+        assert.equal(scope.test.ssn, 123);
+        assert.equal(scope.test.constructor, Person);
     });
 
     it('Scope gets pre-filled if we already have a cached copy', function () {
         // Fill cache
         var deferred = $q.defer();
-        var promise = optimisticCache(deferred.promise, 'test');
+        var promise = optimisticCache(deferred.promise, 'test', mapperOptions);
         deferred.resolve({
             id: 123
         });
@@ -28,26 +53,28 @@ describe('Optimistic Cache', function () {
 
         // Request it again somewhere else
         deferred = $q.defer();
-        promise = optimisticCache(deferred.promise, 'test');
+        promise = optimisticCache(deferred.promise, 'test', mapperOptions);
 
         // Should be on scope now
         var scope = {};
         promise.toScope(scope, 'test');
-        assert.equal(scope.test.id, 123);
+        assert.equal(scope.test.ssn, 123);
+        assert.equal(scope.test.constructor, Person);
 
         // Scope gets updated when results come in
         deferred.resolve({
             id: 124
         });
         $rootScope.$digest();
-        assert.equal(scope.test.id, 124);
+        assert.equal(scope.test.ssn, 124);
+        assert.equal(scope.test.constructor, Person);
     });
 
     it('Updates scope objects in place', function () {
         var result = null;
         var deferred = $q.defer();
-        var promise = optimisticCache(deferred.promise, 'test');
-        promise.then(function (obj) {
+        var promise = optimisticCache(deferred.promise, 'test', mapperOptions);
+        promise.toScope({}, 'test').then(function (obj) {
             result = obj;
         });
         deferred.resolve({
@@ -58,7 +85,7 @@ describe('Optimistic Cache', function () {
         var scope = {};
         var result2 = null;
         deferred = $q.defer();
-        promise = optimisticCache(deferred.promise, 'test');
+        promise = optimisticCache(deferred.promise, 'test', mapperOptions);
         promise.toScope(scope, 'person').then(function (obj) {
             result2 = obj;
             assert.equal(result2, result);
@@ -67,7 +94,9 @@ describe('Optimistic Cache', function () {
 
         deferred.resolve({ id: 1, name: 'Ruben' });
         $rootScope.$digest();
-        assert.equal(scope.person.id, 1);
+        assert.equal(scope.person.ssn, 1);
+        assert.equal(scope.person.name, 'Ruben');
+        assert.equal(scope.person.constructor, Person);
 
         assert.equal(result2, result);
         assert.equal(scope.person, result);
@@ -76,8 +105,8 @@ describe('Optimistic Cache', function () {
     it('Updates scope arrays in place', function () {
         var result = null;
         var deferred = $q.defer();
-        var promise = optimisticCache(deferred.promise, 'test');
-        promise.then(function (obj) {
+        var promise = optimisticCache(deferred.promise, 'test', mapperOptions);
+        promise.toScope({}, 'test').then(function (obj) {
             result = obj;
         });
         deferred.resolve([
@@ -88,7 +117,7 @@ describe('Optimistic Cache', function () {
         var scope = {};
         var result2 = null;
         deferred = $q.defer();
-        promise = optimisticCache(deferred.promise, 'test');
+        promise = optimisticCache(deferred.promise, 'test', mapperOptions);
         promise.toScope(scope, 'people').then(function (obj) {
             result2 = obj;
             assert.equal(result2, result);
@@ -100,13 +129,16 @@ describe('Optimistic Cache', function () {
             { id: 2, name: 'Test 3' }
         ]);
         $rootScope.$digest();
-        assert.equal(scope.people[0].id, 1);
+        console.log(scope.people);
+        assert.equal(scope.people[0].ssn, 1);
         assert.equal(scope.people[0].name, 'Test 2');
+        assert.equal(scope.people[0].constructor, Person);
 
         assert.equal(result2, result);
         assert.equal(scope.people, result);
     });
 
+    // TODO: Adjust to test Mapper functionality
     it('Uses results from getAll to pre-populate get', function () {
         var deferred = $q.defer();
         var promise = optimisticCache(deferred.promise, 'test');
@@ -132,6 +164,7 @@ describe('Optimistic Cache', function () {
         assert.equal(scope.person, result);
     });
 
+    // TODO: Adjust to test Mapper functionality
     it('Can disable pre-populate', function () {
         var deferred = $q.defer();
         var promise = optimisticCache(deferred.promise, 'test', {
@@ -159,35 +192,5 @@ describe('Optimistic Cache', function () {
         assert.equal(result.name, 'New');
         assert.equal(scope.person, result);
     });
-
-    it('Can expire caches', function () {
-        // Fill cache
-        var deferred = $q.defer();
-        var promise = optimisticCache(deferred.promise, 'test');
-        deferred.resolve({
-            id: 123
-        });
-        $rootScope.$digest();
-
-        // Clear cache
-        optimisticCache.clear();
-
-        // Request it again somewhere else
-        deferred = $q.defer();
-        promise = optimisticCache(deferred.promise, 'test');
-
-        // Should not be on the scope, it's not cached anymore
-        var scope = {};
-        promise.toScope(scope, 'test');
-        assert.equal(scope.test, undefined);
-
-        // Scope gets updated when results come in
-        deferred.resolve({
-            id: 124
-        });
-        $rootScope.$digest();
-        assert.equal(scope.test.id, 124);
-    });
-
-    it('Can use different ID field');
 });
+
