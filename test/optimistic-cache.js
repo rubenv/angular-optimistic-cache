@@ -116,7 +116,7 @@ describe('Optimistic Cache', function () {
         deferred = $q.defer();
         promise = optimisticCache(deferred.promise, 'test/1');
         promise.toScope(scope, 'person').then(function (obj) {
-            return result = obj;
+            result = obj;
         });
         assert.equal(scope.person.name, 'Ruben');
 
