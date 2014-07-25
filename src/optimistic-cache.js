@@ -65,11 +65,11 @@ angular.module('rt.optimisticcache', []).factory('optimisticCache', function () 
             options = {};
         }
 
-        if (options.idField === null) {
+        if (options.idField === null || options.idField === undefined) {
             options.idField = 'id';
         }
 
-        if (options.populateChildren === null) {
+        if (options.populateChildren === null || options.populateChildren === undefined) {
             options.populateChildren = true;
         }
 
