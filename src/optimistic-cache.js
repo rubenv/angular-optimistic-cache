@@ -21,26 +21,12 @@ angular.module('rt.optimisticcache', []).factory('optimisticCache', function () 
 
     // Store in cache
     function cacheResult(url, result, options) {
-        if (!options) {
-            options = {};
-        }
-
-        if (options.mapper) {
-            if (angular.isArray(result)) {
-                for (var j = 0; j < result.length; j++) {
-                    result[j] = options.mapper(result[j]);
-                }
-            } else {
-                result = options.mapper(result);
-            }
-        }
-
         merge(cache, url, result);
         if (angular.isArray(result) && options.populateChildren) {
             // Cache dependents of getAll call (partial results)
             for (var i = 0; i < result.length; i++) {
                 var obj = result[i];
-                cacheResult(url + '/' + obj[options.idField], obj);
+                cacheResult(cacheResult(url + '/' + obj[options.idField], obj));
             }
         }
     }
@@ -79,11 +65,11 @@ angular.module('rt.optimisticcache', []).factory('optimisticCache', function () 
             options = {};
         }
 
-        if (options.idField === null || options.idField === undefined) {
+        if (options.idField == null) {
             options.idField = 'id';
         }
 
-        if (options.populateChildren === null || options.populateChildren === undefined) {
+        if (options.populateChildren == null) {
             options.populateChildren = true;
         }
 
@@ -95,12 +81,12 @@ angular.module('rt.optimisticcache', []).factory('optimisticCache', function () 
         // Decorate the promise with a toScope method.
         promise.toScope = function toScope(scope, field) {
             // Fill from cache initially
-            merge(scope, field, fetchFromCache(url));
+            var cachedResult = fetchFromCache(url);
+            merge(scope, field, cachedResult);
 
-            // Wait for completion
-            promise.then(function () {
-                // Merge result to scope, from cache (it's cached in the first promise watcher)
-                merge(scope, field, fetchFromCache(url));
+            promise.then(function (obj) {
+                // Merge result to scope
+                merge(scope, field, obj);
             });
 
             // Return promise for chaining

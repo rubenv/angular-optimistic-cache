@@ -66,8 +66,6 @@ describe('Optimistic Cache', function () {
         assert.equal(scope.person, result);
 
         deferred.resolve({ id: 1, name: 'Ruben' });
-        $rootScope.$digest();
-        assert.equal(scope.person.id, 1);
 
         assert.equal(result2, result);
         assert.equal(scope.person, result);
@@ -99,9 +97,6 @@ describe('Optimistic Cache', function () {
             { id: 1, name: 'Test 2' },
             { id: 2, name: 'Test 3' }
         ]);
-        $rootScope.$digest();
-        assert.equal(scope.people[0].id, 1);
-        assert.equal(scope.people[0].name, 'Test 2');
 
         assert.equal(result2, result);
         assert.equal(scope.people, result);
@@ -121,7 +116,7 @@ describe('Optimistic Cache', function () {
         deferred = $q.defer();
         promise = optimisticCache(deferred.promise, 'test/1');
         promise.toScope(scope, 'person').then(function (obj) {
-            result = obj;
+            return result = obj;
         });
         assert.equal(scope.person.name, 'Ruben');
 
