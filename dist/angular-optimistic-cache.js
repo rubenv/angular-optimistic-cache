@@ -59,10 +59,10 @@ angular.module('rt.optimisticcache', []).factory('optimisticCache', function () 
     if (!options) {
       options = {};
     }
-    if (options.idField == null) {
+    if (options.idField === null) {
       options.idField = 'id';
     }
-    if (options.populateChildren == null) {
+    if (options.populateChildren === null) {
       options.populateChildren = true;
     }
     // Cache all calls (regardless of whether toScope is used).
